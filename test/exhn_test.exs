@@ -1,7 +1,13 @@
 defmodule ExHNTest do
   use ExUnit.Case
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  test "gets an item" do
+    {:ok, item} = ExHN.item(100)
+    assert item["by"] == "pc"
+  end
+
+  test "gets a user" do
+    {:ok, user} = ExHN.user("pg")
+    assert user["created"] == 1160418092
   end
 end
