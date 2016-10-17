@@ -8,18 +8,18 @@ defmodule ExHN.Live do
   alias Poison.Parser
   require Logger
 
-  @urls %{
-    :max_item => "https://s-usc1c-nss-136.firebaseio.com/v0/maxitem.json?ns=hacker-news&sse=true",
-    :updates => "https://s-usc1c-nss-136.firebaseio.com/v0/updates.json?ns=hacker-news&sse=true",
-    :new_stories => "https://s-usc1c-nss-136.firebaseio.com/v0/newstories.json?ns=hacker-news&sse=true",
-    :top_stories => "https://s-usc1c-nss-136.firebaseio.com/v0/topstories.json?ns=hacker-news&sse=true",
-    :best_stories => "https://s-usc1c-nss-136.firebaseio.com/v0/beststories.json?ns=hacker-news&sse=true",
-    :ask_stories => "https://s-usc1c-nss-136.firebaseio.com/v0/askstories.json?ns=hacker-news&sse=true",
-    :show_stories => "https://s-usc1c-nss-136.firebaseio.com/v0/showstories.json?ns=hacker-news&sse=true",
-    :job_stories => "https://s-usc1c-nss-136.firebaseio.com/v0/jobstories.json?ns=hacker-news&sse=true"
-  }
+  @endpoints [
+    :max_item,
+    :updates,
+    :new_stories,
+    :top_stories,
+    :best_stories,
+    :ask_stories,
+    :show_stories,
+    :job_stories
+  ]
 
-  for {name, url} <- @urls do
+  for name <- @endpoints do
     @doc """
     Returns a `Stream` of new data from the `/#{name |> Atom.to_string}` endpoint
     """
@@ -29,7 +29,9 @@ defmodule ExHN.Live do
     end
 
     defp start(unquote(name)) do
-      fn () -> HTTPoison.get!(unquote(url), %{}, [stream_to: self, recv_timeout: :infinity]) end
+      url = unquote(name) |> make_url
+
+      fn () -> HTTPoison.get!(url, %{}, [stream_to: self, recv_timeout: :infinity]) end
     end
   end
 
@@ -53,5 +55,11 @@ defmodule ExHN.Live do
 
   defp parse(data) do
     data |> Parser.parse!
+  end
+
+  defp make_url(name) do
+    url = name |> Atom.to_string |> String.replace("_", "")
+
+    "https://s-usc1c-nss-136.firebaseio.com/v0/#{url}.json?ns=hacker-news&sse=true"
   end
 end
