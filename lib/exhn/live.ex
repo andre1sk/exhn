@@ -6,7 +6,6 @@ defmodule ExHN.Live do
   """
 
   alias Poison.Parser
-  require Logger
 
   @endpoints [
     :max_item,
@@ -48,8 +47,6 @@ defmodule ExHN.Live do
   end
 
   defp finish(poison) do
-    Logger.info("Poison stopped")
-
     :hackney.stop_async(poison.id)
   end
 
