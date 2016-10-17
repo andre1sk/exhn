@@ -1,5 +1,5 @@
 defmodule ExHN.LiveTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   test "returns data from stream" do
     max_item = ExHN.Live.max_item |> Enum.take(1) |> hd

@@ -1,5 +1,5 @@
 defmodule ExHNTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   test "gets an item" do
     {:ok, item} = ExHN.item(100)

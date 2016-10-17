@@ -1,5 +1,5 @@
 defmodule ExHN.GatewayTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   test "parses a successful response" do
     body = ExHN.Gateway.get!("item/8863").body
