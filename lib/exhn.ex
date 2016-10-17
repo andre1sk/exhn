@@ -1,14 +1,24 @@
 defmodule ExHN do
-  @moduledoc false
+  @moduledoc """
+  Interface to the static endpoints of the Hacker News API.
+
+  See the [API docs](https://github.com/HackerNews/API) for more information.
+  """
 
   alias ExHN.Gateway
 
+  @doc """
+  Gets the item with the specified `id`
+  """
   def item(id) do
     "item/#{id}"
     |> Gateway.get
     |> process_response
   end
 
+  @doc """
+  Gets the user with the specified `name`
+  """
   def user(name) do
     "user/#{name}"
     |> Gateway.get

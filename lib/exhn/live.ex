@@ -1,5 +1,9 @@
 defmodule ExHN.Live do
-  @moduledoc false
+  @moduledoc """
+  Interface to the live endpoints of the Hacker News API.
+
+  See the [API docs](https://github.com/HackerNews/API#live-data) for more information.
+  """
 
   alias Poison.Parser
   require Logger
@@ -16,6 +20,9 @@ defmodule ExHN.Live do
   }
 
   for {name, url} <- @urls do
+    @doc """
+    Returns a `Stream` of new data from the `/#{name |> Atom.to_string}` endpoint
+    """
     def unquote(name)() do
       make_stream(unquote(name))
     end
