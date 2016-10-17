@@ -23,6 +23,7 @@ defmodule ExHN.Live do
     @doc """
     Returns a `Stream` of new data from the `/#{name |> Atom.to_string}` endpoint
     """
+    @spec unquote(name)() :: Enumerable.t
     def unquote(name)() do
       make_stream(unquote(name))
     end
