@@ -35,4 +35,8 @@ defmodule ExHN do
         {:ok, body}
     end
   end
+
+  defp process_response(_) do
+    {:error, "Request failed"}
+  end
 end
