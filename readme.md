@@ -15,7 +15,7 @@ end
 
 defp deps do
   [
-    { :exhn, "~> 0.0.0" }
+    { :exhn, "~> 1.0.0" }
   ]
 end
 ```
